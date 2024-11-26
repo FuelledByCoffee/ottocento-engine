@@ -45,16 +45,16 @@ jobs:
             c_compiler: cl
 
     steps:
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: doxygen doxygen-doc doxygen-gui doxygen-latex graphviz mscgen wget
+        version: 1.0
     - name: Install Vulkan-SDK
       run: |
         wget -qO- https://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo tee /etc/apt/trusted.gpg.d/lunarg.asc 
         sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-jammy.list http://packages.lunarg.com/vulkan/lunarg-vulkan-jammy.list
         sudo apt update
         sudo apt install vulkan-sdk
-    - uses: awalsh128/cache-apt-pkgs-action@latest
-      with:
-        packages: doxygen doxygen-doc doxygen-gui doxygen-latex graphviz mscgen 
-        version: 1.0
         
     - uses: actions/checkout@v4
     - name: Set reusable strings
