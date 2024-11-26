@@ -1,4 +1,4 @@
-﻿// Ottocento Engine. Architectural BIM Engine.
+// Ottocento Engine. Architectural BIM Engine.
 // Copyright (C) 2024  Lucas M. Faria.
 //
 // This program is free software: you can redistribute it and/or modify
@@ -274,12 +274,14 @@ void OttDevice::createInstance()
 #endif
     VkInstanceCreateInfo createInfo {
                         .sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
+#ifdef __APPLE__
+                        .flags = VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR,
+#else
+                        .flags = 0,
+#endif
                         .pApplicationInfo = &appInfo,
                         .enabledExtensionCount = static_cast<uint32_t>(extensions.size()),
-                        .ppEnabledExtensionNames = extensions.data(),
-#ifdef __APPLE__
-                        .flags = VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR
-#endif
+                        .ppEnabledExtensionNames = extensions.data()
     };
     
     VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo{};
