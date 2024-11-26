@@ -9,6 +9,16 @@ on:
     branches: [ "main" ]
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+      name: Install dependencies
+      with:
+        packages: doxygen doxygen-doc doxygen-gui doxygen-latex graphviz mscgen wget libxinerama-dev libxcursor-dev xorg-dev libglu1-mesa-dev pkg-config
+        version: 1.0
+      
+
   build:
     runs-on: ${{ matrix.os }}
 
@@ -45,12 +55,6 @@ jobs:
             c_compiler: cl
 
     steps:
-    - uses: awalsh128/cache-apt-pkgs-action@latest
-      name: Install dependencies
-      with:
-        packages: doxygen doxygen-doc doxygen-gui doxygen-latex graphviz mscgen wget libxinerama-dev libxcursor-dev xorg-dev libglu1-mesa-dev pkg-config
-        version: 1.0
-        
     - uses: actions/checkout@v4
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
