@@ -1,7 +1,6 @@
 # https://stackoverflow.com/a/67044657/6692219
-find_package(Vulkan)
-find_package(Vulkan COMPONENTS glslc)
-find_program(glslc_executable NAMES glslc HINTS Vulkan::glslc)
+find_package(Vulkan COMPONENTS slangs)
+find_program(slangc_executable NAMES slangc HINTS Vulkan::slangc)
 
 set(SHADER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/shaders)
 file(GLOB shaders
@@ -30,7 +29,7 @@ foreach(shader IN LISTS shaders)
 	endif()
 
 	add_custom_command(OUTPUT ${SHADER_DIR}/${spv_base}.spv
-		COMMAND ${Vulkan_GLSLC_EXECUTABLE} ${shader} -o ${SHADER_DIR}/${spv_base}.spv
+		COMMAND slangc -target spirv -emit-spirv-directly -fvk-use-entrypoint-name -source-embed-style u32 -source-embed-name ${shader} -o ${SHADER_DIR}/${spv_base}.spv
 		DEPENDS ${shader}
 		COMMENT "Compiling ${FILENAME}")
 

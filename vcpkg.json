@@ -11,6 +11,7 @@
       "tinyobjloader",
       "imgui",
       "catch2",
+      "shader-slang",
       "fmt"
    ]
 }
